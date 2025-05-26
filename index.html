@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for better aesthetics */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for better content flow */
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 2rem; /* Add some margin from the top */
+        }
+
+        h1 {
+            color: #2c3e50; /* Darker heading color */
+            font-size: 2.5rem; /* Larger heading */
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.75rem; /* Space between input and button */
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group input[type="text"] {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e0; /* Light gray border */
+            border-radius: 0.75rem; /* Rounded input field */
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input[type="text"]:focus {
+            border-color: #4299e1; /* Blue border on focus */
+        }
+
+        button {
+            background-color: #4299e1; /* Blue button */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded button */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+        }
+
+        button:hover {
+            background-color: #3182ce; /* Darker blue on hover */
+            transform: translateY(-1px); /* Slight lift on hover */
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #edf2f7; /* Lighter separator */
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        .todo-item .title {
+            flex-grow: 1;
+            font-size: 1.1rem;
+            color: #4a5568; /* Dark gray text */
+        }
+
+        .todo-item .title.completed {
+            text-decoration: line-through;
+            color: #a0aec0; /* Lighter gray for completed */
+        }
+
+        .todo-item .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .todo-item .actions button {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 0.5rem;
+        }
+
+        .todo-item .actions .toggle-btn {
+            background-color: #48bb78; /* Green for toggle */
+        }
+        .todo-item .actions .toggle-btn:hover {
+            background-color: #38a169;
+        }
+
+        .todo-item .actions .delete-btn {
+            background-color: #ef4444; /* Red for delete */
+        }
+        .todo-item .actions .delete-btn:hover {
+            background-color: #dc2626;
+        }
+
+        .message-box {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+
+        .api-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .api-status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .api-status-indicator.connected {
+            background-color: #48bb78; /* Green */
+        }
+
+        .api-status-indicator.disconnected {
+            background-color: #ef4444; /* Red */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 1rem;
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+            .input-group button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Todo List</h1>
+
+        <div class="api-status">
+            <span id="apiStatusIndicator" class="api-status-indicator disconnected"></span>
+            <span id="apiStatusText">API: Disconnected</span>
+        </div>
+
+        <div id="messageBox" class="message-box"></div>
+
+        <div class="input-group">
+            <input type="text" id="newTodoInput" placeholder="Add a new todo...">
+            <button id="addTodoBtn">Add Todo</button>
+        </div>
+
+        <ul id="todoList" class="todo-list">
+            </ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

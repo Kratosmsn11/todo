@@ -2,6 +2,7 @@
 
 // Import the Express.js framework
 const express = require('express');
+const cors = require('cors') 
 // Import the 'uuid' library to generate unique IDs for todos
 const { v4: uuidv4 } = require('uuid');
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware to parse JSON bodies from incoming requests
 // This allows the server to read JSON data sent in POST and PUT requests
 app.use(express.json());
+app.use(cors())
 
 // In-memory array to store todo items.
 // Each todo item will be an object with 'id', 'title', and 'completed' properties.
